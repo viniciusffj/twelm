@@ -4,9 +4,10 @@
   "description": "Users service from TwElm",
   "main": "app.js",
   "scripts": {
-    "test": "npm test",
-    "test-api": "./node_modules/mocha/bin/mocha --watch tests/api/",
-    "test-unit": "./node_modules/mocha/bin/mocha tests/unit/ --recursive --watch ",
+    "test": "npm run lint && npm run test-unit && npm run test-api",
+    "lint": "./node_modules/jshint/bin/jshint src/",
+    "test-unit": "./node_modules/mocha/bin/mocha tests/unit/ --recursive",
+    "test-api": "./node_modules/mocha/bin/mocha tests/api/ --recursive",
     "dev": "./node_modules/nodemon/bin/nodemon.js src/app.js"
   },
   "author": "viniciusffj",
@@ -20,6 +21,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "joi": "^8.0.5",
+    "jshint": "^2.9.1",
     "mocha": "^2.4.5",
     "nodemon": "^1.9.1",
     "supertest": "^1.2.0"

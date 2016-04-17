@@ -9,7 +9,7 @@ var validator = (function () {
 
   function validate(user, success, error) {
     Joi.validate(user, userSchema, function (err, value) {
-      if (err == null) {
+      if (err === null) {
         success();
       } else {
         error(err);
