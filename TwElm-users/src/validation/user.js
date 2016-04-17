@@ -3,7 +3,7 @@ var validator = (function () {
 
   var userSchema = {
     name: Joi.string().required(),
-    username: Joi.string().required(),
+    username: Joi.string().required().trim().alphanum(),
     password: Joi.string().required()
   };
 
