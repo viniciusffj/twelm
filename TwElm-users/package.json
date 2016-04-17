@@ -6,6 +6,7 @@
   "scripts": {
     "test": "npm test",
     "test-api": "./node_modules/mocha/bin/mocha --watch tests/api/",
+    "test-unit": "./node_modules/mocha/bin/mocha tests/unit/ --recursive --watch ",
     "dev": "./node_modules/nodemon/bin/nodemon.js src/app.js"
   },
   "author": "viniciusffj",
@@ -13,10 +14,12 @@
   "dependencies": {
     "body-parser": "^1.15.0",
     "express": "^4.13.4",
+    "joi": "^8.0.5",
     "mongodb": "^2.1.16"
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "joi": "^8.0.5",
     "mocha": "^2.4.5",
     "nodemon": "^1.9.1",
     "supertest": "^1.2.0"
