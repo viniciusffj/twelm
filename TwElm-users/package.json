@@ -1,0 +1,19 @@
+{
+  "name": "twelm-users",
+  "version": "0.0.1",
+  "description": "Users service from TwElm",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm test",
+    "dev": "./node_modules/nodemon/bin/nodemon.js app.js"
+  },
+  "author": "viniciusffj",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4",
+    "mongodb": "^2.1.16"
+  },
+  "devDependencies": {
+    "nodemon": "^1.9.1"
+  }
+}
