@@ -5,15 +5,20 @@
   "main": "app.js",
   "scripts": {
     "test": "npm test",
-    "dev": "./node_modules/nodemon/bin/nodemon.js app.js"
+    "test-api": "./node_modules/mocha/bin/mocha --watch tests/api/",
+    "dev": "./node_modules/nodemon/bin/nodemon.js src/app.js"
   },
   "author": "viniciusffj",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.15.0",
     "express": "^4.13.4",
     "mongodb": "^2.1.16"
   },
   "devDependencies": {
-    "nodemon": "^1.9.1"
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5",
+    "nodemon": "^1.9.1",
+    "supertest": "^1.2.0"
   }
 }
