@@ -1,9 +1,10 @@
 var userData = (function () {
+  var _ = require('lodash');
 
   function insertUser(user, db, onError, onSuccess) {
     db.collection('users')
       .insertOne(user, function(err, result) {
-        if (err === null) {
+        if (_.isNil(err)) {
           onSuccess(user);
         } else {
           onError(err);
@@ -13,11 +14,11 @@ var userData = (function () {
 
   function createUser(config, user, onSuccess, onError) {
 
-    if (config !== null) {
+    if (!_.isNil(config)) {
       var mongoClient = config.mongoClient;
 
       mongoClient.connect(config.url, function(err, db) {
-        if (err === null) {
+        if (_.isNil(err)) {
           insertUser(user, db, onError, onSuccess);
         } else {
           onError(err);

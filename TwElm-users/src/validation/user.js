@@ -1,5 +1,6 @@
 var validator = (function () {
   var Joi = require('joi');
+  var _ = require('lodash');
 
   var userSchema = {
     name: Joi.string().required(),
@@ -9,7 +10,7 @@ var validator = (function () {
 
   function validate(user, success, error) {
     Joi.validate(user, userSchema, function (err, value) {
-      if (err === null) {
+      if (_.isNil(err)) {
         success();
       } else {
         error(err);
