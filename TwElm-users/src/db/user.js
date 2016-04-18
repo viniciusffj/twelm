@@ -1,38 +1,57 @@
 var userData = (function () {
   var _ = require('lodash');
 
-  function insertUser(user, db, onError, onSuccess) {
-    db.collection('users')
-      .insertOne(user, function(err, result) {
-        if (_.isNil(err)) {
-          onSuccess(user);
-        } else {
-          onError(err);
-        }
+  function finalOnSuccess(db, onSuccess, onError) {
+    return function (doc) {
+      db.close(function (err) {
+        noErrors(err) ? onSuccess(doc) : onError(err);
       });
+    };
   }
 
-  function createUser(config, user, onSuccess, onError) {
+  function noErrors(err) {
+    return _.isNil(err);
+  }
 
-    if (!_.isNil(config)) {
+  function dbFunction(dbFn, config, arg, onSuccess, onError) {
+    if (_.isNil(config)) {
+      onError();
+    } else {
       var mongoClient = config.mongoClient;
 
       mongoClient.connect(config.url, function(err, db) {
-        if (_.isNil(err)) {
-          insertUser(user, db, onError, onSuccess);
+        if (noErrors(err)) {
+          dbFn(arg, db, finalOnSuccess(db, onSuccess, onError), onError);
         } else {
           onError(err);
         }
       });
-
-    } else {
-      onError();
     }
+  }
 
+  function insertUser(user, db, onSuccess, onError) {
+    db.collection('users')
+      .insertOne(user, function(err, result) {
+        noErrors(err) ? onSuccess(user) : onError(err);
+      });
+  }
+
+  function foundUser(err, doc) {
+    return noErrors(err) && !_.isNil(doc);
+  }
+
+  function getUserFromDB(username, db, onSuccess, onError) {
+    db.collection('users')
+      .find({ 'username': username })
+      .limit(1)
+      .next(function (err, doc) {
+        foundUser(err, doc) ? onSuccess(doc) : onError(err);
+      });
   }
 
   return {
-    createUser: createUser
+    createUser: _.curry(dbFunction)(insertUser),
+    getUser: _.curry(dbFunction)(getUserFromDB)
   };
 })();
 
