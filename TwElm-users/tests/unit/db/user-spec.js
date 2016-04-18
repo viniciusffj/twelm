@@ -29,22 +29,22 @@ describe('User data', function () {
   describe('when creating a user', function () {
 
     it('should throw if config is missing', function (done) {
-      userData.createUser(null, user, done, assert.fail);
+      userData.createUser(null, user, assert.fail, done);
     });
 
     it('should call success', function (done) {
       config.mongoClient = mongoHelper.successfulClient;
-      userData.createUser(config, user, assert.fail, doneWrapper(done));
+      userData.createUser(config, user, doneWrapper(done), assert.fail);
     });
 
     it('should throw if cannot connect on database', function (done) {
       config.mongoClient = mongoHelper.notConnectedClient;
-      userData.createUser(config, user, doneWrapper(done), assert.fail);
+      userData.createUser(config, user, assert.fail, doneWrapper(done));
     });
 
     it('should throw if cannot insert user', function (done) {
       config.mongoClient = mongoHelper.notInsertedClient;
-      userData.createUser(config, user, doneWrapper(done), assert.fail);
+      userData.createUser(config, user, assert.fail, doneWrapper(done));
     });
 
   });

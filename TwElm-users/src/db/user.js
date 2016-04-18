@@ -11,7 +11,7 @@ var userData = (function () {
       });
   }
 
-  function createUser(config, user, onError, onSuccess) {
+  function createUser(config, user, onSuccess, onError) {
 
     if (config !== null) {
       var mongoClient = config.mongoClient;
