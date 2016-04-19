@@ -12,23 +12,29 @@ var mongoConfig = require('./db/config');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.post('/users', function (req, res) {
+function validateUser(req, res, next) {
   var user = req.body;
 
   userValidator.validate(user, function () {
-      userData.createUser(mongoConfig, user, function (user) {
-          res.json({
-            name: user.name,
-            username: user.username
-          });
-        }, function () {
-          res.status(500).json({ message: "Error creating user" });
-        });
-    }, function () {
-      res.status(400).json({ message: "Invalid user" });
-    });
+    req.user = user;
+    next();
+  }, function (err) {
+    res.status(400).json({ message: "Invalid user" });
+  });
+}
 
-});
+function saveUser(req, res, next) {
+  userData.createUser(mongoConfig, req.user, function (user) {
+    res.json({
+      name: user.name,
+      username: user.username
+    });
+  }, function () {
+    res.status(500).json({ message: "Error creating user" });
+  });
+}
+
+app.post('/users', [validateUser, saveUser]);
 
 app.get('/users/:username', function (req, res) {
   var username = req.params.username;
