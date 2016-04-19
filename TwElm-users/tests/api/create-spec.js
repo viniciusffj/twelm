@@ -1,4 +1,3 @@
-var assert = require('chai').assert;
 var request = require('supertest');
 
 var srcDir = '../../src/';

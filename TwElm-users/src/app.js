@@ -8,7 +8,7 @@ var userData = require('./db/user');
 var port = 8000;
 
 var MongoClient = require('mongodb').MongoClient;
-var url = 'mongodb://localhost:27017/twitta';
+var url = 'mongodb://localhost:27017/users';
 
 var mongoConfig = {
   mongoClient: MongoClient,
@@ -32,6 +32,20 @@ app.post('/users', function (req, res) {
         });
     }, function () {
       res.status(400).json({ message: "Invalid user" });
+    });
+
+});
+
+app.get('/users/:username', function (req, res) {
+  var username = req.params.username;
+
+  userData.getUser(mongoConfig, username, function (user) {
+      res.json({
+        name: user.name,
+        username: user.username
+      });
+    }, function () {
+      res.status(404).json({ message: "User doesnt exist" });
     });
 
 });

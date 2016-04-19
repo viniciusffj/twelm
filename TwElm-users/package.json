@@ -7,7 +7,9 @@
     "test": "npm run lint && npm run test-unit && npm run test-api",
     "lint": "./node_modules/jshint/bin/jshint src/",
     "test-unit": "./node_modules/mocha/bin/mocha tests/unit/ --recursive",
-    "test-api": "./node_modules/mocha/bin/mocha tests/api/ --recursive",
+    "test-api": "npm run migrate-up; ./node_modules/mocha/bin/mocha tests/api/ --recursive; npm run migrate-down",
+    "migrate-up": "node ./node_modules/mongodb-migrate -runmm -cfg 'config/mongo.local.json' up",
+    "migrate-down": "node ./node_modules/mongodb-migrate -runmm -cfg 'config/mongo.local.json' down",
     "dev": "./node_modules/nodemon/bin/nodemon.js src/app.js"
   },
   "author": "viniciusffj",
@@ -17,7 +19,8 @@
     "express": "^4.13.4",
     "joi": "^8.0.5",
     "lodash": "^4.11.1",
-    "mongodb": "^2.1.16"
+    "mongodb": "^2.1.16",
+    "mongodb-migrate": "^2.0.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
