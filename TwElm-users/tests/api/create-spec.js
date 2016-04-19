@@ -54,6 +54,25 @@ describe('Create user', function() {
         .expect(400, expectedResponse, done);
     });
 
+    it('should now allow duplicated username', function (done) {
+      user = {
+        name: 'El tobi',
+        username: 'tobielm',
+        password: 'differentone'
+      }
+
+      var expectedResponse = {
+        message: 'Username already exists'
+      };
+
+      request(app)
+        .post('/users')
+        .send(user)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(409, expectedResponse, done);
+    });
+
   });
 
 });

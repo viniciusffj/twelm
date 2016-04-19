@@ -4,7 +4,11 @@ var userData = (function () {
   function finalOnSuccess(db, onSuccess, onError) {
     return function (doc) {
       db.close(function (err) {
-        noErrors(err) ? onSuccess(doc) : onError(err);
+        if (noErrors(err)) {
+          onSuccess(doc);
+        } else {
+          onError(err);
+        }
       });
     };
   }
@@ -32,7 +36,11 @@ var userData = (function () {
   function insertUser(user, db, onSuccess, onError) {
     db.collection('users')
       .insertOne(user, function(err, result) {
-        noErrors(err) ? onSuccess(user) : onError(err);
+        if (noErrors(err)) {
+          onSuccess(user);
+        } else {
+          onError(err);
+        }
       });
   }
 
@@ -45,7 +53,11 @@ var userData = (function () {
       .find({ 'username': username })
       .limit(1)
       .next(function (err, doc) {
-        foundUser(err, doc) ? onSuccess(doc) : onError(err);
+        if (foundUser(err, doc)) {
+          onSuccess(doc);
+        } else {
+          onError(err);
+        }
       });
   }
 

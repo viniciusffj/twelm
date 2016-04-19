@@ -29,8 +29,12 @@ function saveUser(req, res, next) {
       name: user.name,
       username: user.username
     });
-  }, function () {
-    res.status(500).json({ message: "Error creating user" });
+  }, function (err) {
+    if (err.code === 11000) {
+      res.status(409).json({ message: "Username already exists" });
+    } else {
+      res.status(500).json({ message: "Error creating user" });
+    }
   });
 }
 

@@ -8,7 +8,7 @@ var config = (function () {
   return {
     mongoClient: MongoClient,
     url: 'mongodb://' + config.host + ':' + config.port + '/' + config.db
-  }
+  };
 
 })();
 
