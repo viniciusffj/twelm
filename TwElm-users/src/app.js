@@ -7,13 +7,7 @@ var userData = require('./db/user');
 
 var port = 8000;
 
-var MongoClient = require('mongodb').MongoClient;
-var url = 'mongodb://localhost:27017/users';
-
-var mongoConfig = {
-  mongoClient: MongoClient,
-  url: url
-};
+var mongoConfig = require('./db/config');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
