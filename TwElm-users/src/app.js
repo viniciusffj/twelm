@@ -30,6 +30,7 @@ function saveUser(req, res, next) {
       username: user.username
     });
   }, function (err) {
+    console.log(err);
     if (err.code === 11000) {
       res.status(409).json({ message: "Username already exists" });
     } else {

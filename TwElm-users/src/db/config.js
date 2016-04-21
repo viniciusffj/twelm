@@ -1,13 +1,18 @@
 var config = (function () {
-  var fs = require('fs');
   var MongoClient = require('mongodb').MongoClient;
+  var _ = require('lodash');
 
-  var file = fs.readFileSync('config/mongo.local.json', {'encoding': 'UTF8'});
-  var config = JSON.parse(file).mongoAppDb;
+  var mongoConfig = {
+    host: process.env.MONGO_HOST || 'mongo',
+    port: process.env.MONGO_PORT || 27017,
+    db: process.env.MONGO_USERS_DB || 'users'
+  };
+
+  var url = _.template('mongodb://${host}:${port}/${db}')(mongoConfig);
 
   return {
     mongoClient: MongoClient,
-    url: 'mongodb://' + config.host + ':' + config.port + '/' + config.db
+    url: url
   };
 
 })();

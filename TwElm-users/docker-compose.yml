@@ -1,0 +1,12 @@
+version: '2'
+services:
+  twelm-users:
+    build: .
+    ports:
+     - "8000:8000"
+    depends_on:
+     - mongo
+    links:
+      - mongo
+  mongo:
+    image: mongo:latest

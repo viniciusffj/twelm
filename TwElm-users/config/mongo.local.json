@@ -1,6 +1,6 @@
 {
   "mongoAppDb": {
-    "host": "localhost",
+    "host": "mongo",
     "db": "users",
     "port": 27017
   }
